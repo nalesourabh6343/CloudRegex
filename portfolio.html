@@ -1,0 +1,2110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CloudRegex | Infotech Pvt Ltd Software Company in Baramati</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts: Outfit -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- =====================================================
+         GLOBAL VARIABLES + BASE BODY STYLES
+    ====================================================== -->
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --secondary: #06b6d4;
+            --accent: #8b5cf6;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: #f8fafc;
+            color: #1e293b;
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        html {
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+
+        /* Glassmorphism Card Styles */
+        .portfolio-card-premium {
+            position: relative;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.3);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        .portfolio-card-premium:hover {
+            box-shadow: 0 20px 40px -10px rgba(79, 70, 229, 0.4);
+            transform: translateY(-5px);
+        }
+
+        .portfolio-card-premium img {
+            transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .portfolio-card-premium:hover img {
+            transform: scale(1.15);
+        }
+
+        .glass-overlay {
+            background: linear-gradient(to top, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.6) 50%, rgba(15, 23, 42, 0) 100%);
+            backdrop-filter: blur(2px);
+            -webkit-backdrop-filter: blur(2px);
+            border-top: none;
+        }
+
+        /* Top Info Bar - matches footer bg-slate-900 */
+        .top-info-bar {
+            background: #2f4e97;
+
+            color: #e2e8f0;
+            font-size: 0.875rem;
+            padding: 0.65rem 1.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 60;
+            box-sizing: border-box;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .top-info-bar.scrolled {
+            transform: translateY(-100%);
+        }
+
+        .top-info-bar span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            white-space: nowrap;
+        }
+
+        .top-info-bar a {
+            color: #e2e8f0;
+            transition: color 0.3s ease;
+        }
+
+        .top-info-bar a:hover {
+            color: var(--secondary);
+        }
+
+        /* Hide middle item on tablets, show only email and phone */
+        @media (max-width: 768px) {
+            .top-info-bar {
+                gap: 1rem;
+                padding: 0.5rem 1rem;
+                font-size: 0.75rem;
+            }
+
+            .top-info-bar .info-time {
+                display: none;
+            }
+        }
+
+        /* On very small screens, show as scrollable or stack */
+        @media (max-width: 480px) {
+            .top-info-bar {
+                justify-content: space-between;
+                gap: 0.5rem;
+                padding: 0.5rem 0.75rem;
+                font-size: 0.7rem;
+            }
+        }
+
+        /* Improved Fixed Header - positioned below info bar */
+        header#main-header {
+            position: fixed;
+            top: 40px;
+            /* Height of info bar */
+            left: 0;
+            width: 100%;
+            z-index: 50;
+            background: transparent;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @media (max-width: 768px) {
+            header#main-header {
+                top: 32px;
+                /* Smaller info bar on mobile */
+            }
+        }
+
+        @media (max-width: 480px) {
+            header#main-header {
+                top: 28px;
+                /* Even smaller info bar on small mobile */
+            }
+        }
+
+        header#main-header.scrolled {
+            top: 0;
+            /* Move to top when scrolled (info bar scrolls away) */
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        header#main-header nav {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            padding-top: 1.5rem;
+            padding-bottom: 1.5rem;
+        }
+
+        header#main-header.scrolled nav {
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+
+        .nav-link {
+            position: relative;
+            color: #475569;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2.5px;
+            bottom: -5px;
+            left: 0;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: width 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border-radius: 10px;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .gradient-btn {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 20px -5px rgba(79, 70, 229, 0.3);
+        }
+
+        .gradient-btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 15px 30px -10px rgba(79, 70, 229, 0.5);
+            filter: brightness(1.05);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Slider Elements Optimization */
+        #slider-track {
+            display: flex;
+            transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+            will-change: transform;
+        }
+
+        .slide-item {
+            flex: 0 0 100%;
+            width: 100%;
+            min-width: 100%;
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 4rem 2rem;
+            -webkit-user-select: none;
+            user-select: none;
+            box-sizing: border-box;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.03) 0%, rgba(6, 182, 212, 0.03) 100%);
+        }
+
+        .slide-icon-wrap {
+            width: 180px;
+            height: 180px;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border-radius: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 20px 40px -15px rgba(79, 70, 229, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slide-icon-wrap::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 42px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .slide-item:hover .slide-icon-wrap::before {
+            opacity: 1;
+        }
+
+        .slide-icon-wrap i {
+            font-size: 90px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transition: transform 0.3s ease;
+        }
+
+        .slide-item:hover .slide-icon-wrap i {
+            transform: scale(1.1);
+        }
+
+        .slide-item h3 {
+            font-size: 2rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .slide-item p {
+            font-size: 1.1rem;
+            max-width: 400px;
+        }
+
+        /* Large Desktop */
+        @media (min-width: 1280px) {
+            .slide-item {
+                min-height: 500px;
+                padding: 5rem 3rem;
+            }
+
+            .slide-icon-wrap {
+                width: 220px;
+                height: 220px;
+                border-radius: 50px;
+            }
+
+            .slide-icon-wrap i {
+                font-size: 110px;
+            }
+
+            .slide-item h3 {
+                font-size: 2.5rem;
+            }
+
+            .slide-item p {
+                font-size: 1.25rem;
+            }
+        }
+
+        /* Tablet */
+        @media (max-width: 1024px) {
+            .slide-item {
+                min-height: 350px;
+                padding: 3.5rem 1.5rem;
+            }
+
+            .slide-icon-wrap {
+                width: 150px;
+                height: 150px;
+                border-radius: 35px;
+            }
+
+            .slide-icon-wrap i {
+                font-size: 75px;
+            }
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .slide-item {
+                min-height: 300px;
+                padding: 3rem 1.5rem;
+            }
+
+            .slide-icon-wrap {
+                width: 120px;
+                height: 120px;
+                margin-bottom: 1.5rem;
+                border-radius: 28px;
+            }
+
+            .slide-icon-wrap i {
+                font-size: 60px;
+            }
+
+            .slide-item h3 {
+                font-size: 1.5rem;
+            }
+
+            .slide-item p {
+                font-size: 0.95rem;
+            }
+        }
+
+        /* Small Mobile */
+        @media (max-width: 480px) {
+            .slide-item {
+                min-height: 260px;
+                padding: 2.5rem 1rem;
+            }
+
+            .slide-icon-wrap {
+                width: 100px;
+                height: 100px;
+                margin-bottom: 1rem;
+                border-radius: 24px;
+            }
+
+            .slide-icon-wrap i {
+                font-size: 50px;
+            }
+
+            .slide-item h3 {
+                font-size: 1.25rem;
+            }
+
+            .slide-item p {
+                font-size: 0.875rem;
+            }
+        }
+
+        /* Slider Dot Indicators */
+        .slider-dot {
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .slider-dot.active {
+            background: linear-gradient(135deg, var(--primary), var(--secondary)) !important;
+            transform: scale(1.25);
+            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.4);
+        }
+
+        /* Footer Zone and Animations */
+
+        #mobile-menu.active {
+            right: 0;
+        }
+
+        /* Mobile Menu */
+        #mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 85%;
+            max-width: 320px;
+            height: 100vh;
+            background: white;
+            z-index: 1000;
+            /* Higher z-index */
+            transition: right 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: -10px 0 50px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            padding: 2rem;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        #mobile-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(4px);
+            z-index: 99;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        #mobile-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        /* Floating Social Sidebar */
+        .side-socials {
+            position: fixed;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 40;
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+        }
+
+        .side-social-item {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #fff;
+            color: #64748b;
+            transition: all 0.3s ease;
+            border: 1px solid #f1f5f9;
+        }
+
+        .side-social-item:hover {
+            width: 70px;
+            background: var(--primary);
+            color: white;
+            padding-left: 10px;
+        }
+
+        /* Floating Contact Action */
+        .float-cta {
+            position: fixed;
+            right: -110px;
+            top: 40%;
+            transform: rotate(-90deg);
+            transform-origin: right bottom;
+            z-index: 45;
+            background: var(--secondary);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 12px 12px 0 0;
+            font-weight: 800;
+            letter-spacing: 1px;
+            box-shadow: 0 5px 15px rgba(6, 182, 212, 0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .float-cta:hover {
+            right: -100px;
+            background: var(--primary);
+        }
+
+        .footer-link {
+            transition: transform 0.2s ease, color 0.2s ease;
+            display: inline-block;
+        }
+
+        .footer-link:hover {
+            color: var(--primary);
+            transform: translateX(5px);
+        }
+
+        .social-icon {
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .social-icon:hover {
+            transform: translateY(-5px) scale(1.1);
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 10px 20px rgba(79, 70, 229, 0.2);
+        }
+
+        #dot-bg {
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+            pointer-events: none;
+        }
+    </style>
+
+    <!-- =====================================================
+         FLOATING ORBS (HERO BACKGROUND)
+    ====================================================== -->
+    <style>
+        .floating-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.45;
+            animation: floatOrb 18s infinite ease-in-out;
+            z-index: 0;
+        }
+
+        .orb-1 {
+            width: 300px;
+            height: 300px;
+            background: #6366f1;
+            top: 10%;
+            left: -120px;
+        }
+
+        .orb-2 {
+            width: 350px;
+            height: 350px;
+            background: #22d3ee;
+            bottom: 10%;
+            right: -150px;
+            animation-delay: 4s;
+        }
+
+        .orb-3 {
+            width: 220px;
+            height: 220px;
+            background: #a78bfa;
+            top: 50%;
+            left: 60%;
+            animation-delay: 7s;
+        }
+
+        @keyframes floatOrb {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-80px);
+            }
+        }
+    </style>
+
+    <!-- =====================================================
+         GLASS EFFECT + NOISE OVERLAY
+    ====================================================== -->
+    <style>
+        .glass {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(22px);
+            -webkit-backdrop-filter: blur(22px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow:
+                0 30px 60px rgba(0, 0, 0, 0.08),
+                inset 0 1px 1px rgba(255, 255, 255, 0.6);
+        }
+
+        .noise {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+            background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+            opacity: 0.04;
+        }
+    </style>
+
+    <!-- =====================================================
+         FOOTER ANIMATIONS & BACKGROUND EFFECTS
+    ====================================================== -->
+    <style>
+        /* Footer base */
+        .footer-zone {
+            position: relative;
+            isolation: isolate;
+        }
+
+        /* Particle canvas */
+        #footer-particles {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Floating orbs */
+        .footer-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(70px);
+            opacity: 0.45;
+            animation: motorFloat 18s linear infinite;
+        }
+
+        .orb-a {
+            width: 260px;
+            height: 260px;
+            background: #6366f1;
+            top: 10%;
+            left: -120px;
+        }
+
+        .orb-b {
+            width: 320px;
+            height: 320px;
+            background: #22d3ee;
+            bottom: 15%;
+            right: -150px;
+            animation-duration: 22s;
+        }
+
+        .orb-c {
+            width: 180px;
+            height: 180px;
+            background: #a78bfa;
+            top: 55%;
+            left: 55%;
+            animation-duration: 26s;
+        }
+
+        /* Motor-like movement */
+        @keyframes motorFloat {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+
+            25% {
+                transform: translate(40px, -60px) rotate(90deg);
+            }
+
+            50% {
+                transform: translate(-30px, 40px) rotate(180deg);
+            }
+
+            75% {
+                transform: translate(60px, 20px) rotate(270deg);
+            }
+
+            100% {
+                transform: translate(0, 0) rotate(360deg);
+            }
+        }
+
+        /* Wave layers */
+        .footer-wave {
+            position: absolute;
+            left: -20%;
+            bottom: -30px;
+            width: 140%;
+            height: 120px;
+            background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.12), transparent);
+            animation: waveMove 10s linear infinite;
+        }
+
+        .wave-2 {
+            animation-duration: 14s;
+            opacity: 0.6;
+        }
+
+        @keyframes waveMove {
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(200px);
+            }
+        }
+
+        /* Tech moving lines */
+        .tech-line {
+            position: absolute;
+            height: 1px;
+            width: 160px;
+            background: linear-gradient(90deg, transparent, #22d3ee, transparent);
+            opacity: 0.4;
+            animation: techMove 6s linear infinite;
+        }
+
+        .line-1 {
+            top: 20%;
+            left: -200px;
+        }
+
+        .line-2 {
+            top: 50%;
+            left: -300px;
+            animation-delay: 2s;
+        }
+
+        .line-3 {
+            top: 75%;
+            left: -250px;
+            animation-delay: 4s;
+        }
+
+        @keyframes techMove {
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(140vw);
+            }
+        }
+
+        /* Footer content always above animations */
+        .footer-zone>*:not(canvas):not(.footer-orb):not(.footer-wave):not(.tech-line) {
+            position: relative;
+            z-index: 2;
+        }
+    </style>
+
+
+    <!-- =====================================================
+     FLOATING ACTION BUTTONS – VOLATILE MOTION
+====================================================== -->
+    <style>
+        .floating-actions {
+            position: fixed;
+            right: 24px;
+            bottom: 80px;
+            z-index: 60;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            animation: floatStack 6s ease-in-out infinite;
+        }
+
+        /* Individual Button */
+        .floating-btn {
+            width: 54px;
+            height: 54px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* Hover lift */
+        .floating-btn:hover {
+            transform: translateY(-6px) scale(1.05);
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.25);
+        }
+
+        /* Button Themes */
+        .floating-btn.whatsapp {
+            background: linear-gradient(135deg, #25D366, #1ebe57);
+        }
+
+        .floating-btn.contact {
+            background: linear-gradient(135deg, #4f46e5, #6366f1);
+        }
+
+        .floating-btn.top {
+            background: linear-gradient(135deg, #0f172a, #334155);
+        }
+
+        /* Volatile floating motion */
+        @keyframes floatStack {
+            0% {
+                transform: translateY(0) translateX(0);
+            }
+
+            50% {
+                transform: translateY(-14px) translateX(-4px);
+            }
+
+            100% {
+                transform: translateY(0) translateX(0);
+            }
+        }
+    </style>
+
+    <!-- =====================================================
+     SCROLL PROGRESS BAR – STYLES
+====================================================== -->
+    <style>
+        #scroll-progress-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: transparent;
+            z-index: 9999;
+        }
+
+        /* Animated Gradient Bar */
+        #scroll-progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg,
+                    #4f46e5,
+                    #06b6d4,
+                    #8b5cf6);
+            background-size: 200% 100%;
+            animation: gradientFlow 3s linear infinite;
+            box-shadow:
+                0 0 12px rgba(79, 70, 229, 0.6),
+                0 0 20px rgba(6, 182, 212, 0.4);
+            transition: width 0.15s ease-out;
+            border-radius: 0 6px 6px 0;
+        }
+
+        /* Gradient movement */
+        @keyframes gradientFlow {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            100% {
+                background-position: 200% 50%;
+            }
+        }
+    </style>
+
+
+    <!-- =====================================================
+     SLIDER CARD – RUNNING BORDER EFFECT
+====================================================== -->
+    <style>
+        /* Slide Card Base */
+        .slide-item {
+            position: relative;
+            padding: 28px 24px;
+            border-radius: 24px;
+            background: #ffffff;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        /* Animated Border Layer */
+        .slide-item::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 24px;
+            padding: 2px;
+            /* border thickness */
+            background: linear-gradient(120deg,
+                    #4f46e5,
+                    #06b6d4,
+                    #8b5cf6,
+                    #4f46e5);
+            background-size: 300% 300%;
+            animation: borderRun 6s linear infinite;
+            z-index: -1;
+        }
+
+        /* Inner white mask (creates border illusion) */
+        .slide-item::after {
+            content: "";
+            position: absolute;
+            inset: 2px;
+            border-radius: 22px;
+            background: #ffffff;
+            z-index: -1;
+        }
+
+        /* Border animation */
+        @keyframes borderRun {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            100% {
+                background-position: 300% 50%;
+            }
+        }
+
+        /* Hover enhancement */
+        .slide-item:hover::before {
+            animation-duration: 3s;
+        }
+
+        .slide-item:hover {
+            box-shadow:
+                0 20px 40px rgba(79, 70, 229, 0.15),
+                0 10px 20px rgba(6, 182, 212, 0.12);
+        }
+    </style>
+
+
+</head>
+
+<body>
+
+    <!-- =====================================================
+     SCROLL PROGRESS BAR
+====================================================== -->
+    <div id="scroll-progress-container">
+        <div id="scroll-progress-bar"></div>
+    </div>
+
+
+    <!-- =====================================================
+         GLOBAL BACKGROUND LAYERS
+    ====================================================== -->
+    <div class="noise"></div>
+    <canvas id="dot-bg"></canvas>
+    <div class="mesh-bg"></div>
+
+    <!-- =====================================================
+         MOBILE OVERLAY (MENU BACKDROP)
+    ====================================================== -->
+    <div id="mobile-overlay"></div>
+
+    <!-- =====================================================
+         MOBILE SIDE NAVIGATION DRAWER
+    ====================================================== -->
+    <div id="mobile-menu">
+        <div class="flex items-center justify-between mb-10">
+            <span class="text-xl font-black text-slate-800">Menu</span>
+            <button id="close-menu"
+                class="w-10 h-10 flex items-center justify-center rounded-full bg-slate-50 text-slate-500">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <div class="flex flex-col space-y-6">
+            <a href="#home"
+                class="text-lg font-bold text-slate-700 hover:text-indigo-600 border-b border-slate-50 pb-2">Home</a>
+            <a href="#about"
+                class="text-lg font-bold text-slate-700 hover:text-indigo-600 border-b border-slate-50 pb-2">About
+                us</a>
+            <a href="#services"
+                class="text-lg font-bold text-slate-700 hover:text-indigo-600 border-b border-slate-50 pb-2">Our
+                services</a>
+            <a href="#portfolio"
+                class="text-lg font-bold text-slate-700 hover:text-indigo-600 border-b border-slate-50 pb-2">Portfolio</a>
+            <!-- <a href="#" class="text-lg font-bold text-slate-700 hover:text-indigo-600 border-b border-slate-50 pb-2">Our
+                Products</a>
+            <a href="#blogs"
+                class="text-lg font-bold text-slate-700 hover:text-indigo-600 border-b border-slate-50 pb-2">Blogs</a> -->
+            <a href="#contact-info"
+                class="text-lg font-bold text-slate-700 hover:text-indigo-600 border-b border-slate-50 pb-2">Contact
+                Us</a>
+
+            <button class="gradient-btn w-full py-4 mt-8 rounded-2xl text-white font-bold shadow-xl">
+                Inquire Now
+            </button>
+        </div>
+    </div>
+
+    <!-- =====================================================
+         FLOATING SOCIAL MEDIA SIDEBAR (PREMIUM ANIMATED)
+    ====================================================== -->
+    <div class="fixed left-6 top-1/2 -translate-y-1/2 z-40 hidden md:flex flex-col gap-4">
+
+        <!-- Social Item: Facebook -->
+        <a href="#" class="group relative flex items-center">
+            <div
+                class="w-12 h-12 rounded-full bg-white/90 backdrop-blur-md shadow-lg flex items-center justify-center text-slate-600 transition-all duration-300 group-hover:bg-[#1877F2] group-hover:text-white group-hover:scale-110 group-hover:shadow-[#1877F2]/30 relative z-20">
+                <i class="fab fa-facebook-f text-xl"></i>
+            </div>
+            <span
+                class="absolute left-6 pl-8 pr-4 py-2 bg-white/90 backdrop-blur-md rounded-r-full text-[#1877F2] font-bold text-sm opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 shadow-md z-10 whitespace-nowrap">
+                Facebook
+            </span>
+        </a>
+
+        <!-- Social Item: Instagram -->
+        <a href="https://www.instagram.com/cloudregex_infotech_pvt_ltd/" class="group relative flex items-center"
+            target="_blank">
+            <div
+                class="w-12 h-12 rounded-full bg-white/90 backdrop-blur-md shadow-lg flex items-center justify-center text-slate-600 transition-all duration-300 group-hover:bg-gradient-to-tr group-hover:from-[#833AB4] group-hover:via-[#FD1D1D] group-hover:to-[#F77737] group-hover:text-white group-hover:scale-110 group-hover:shadow-[#FD1D1D]/30 relative z-20">
+                <i class="fab fa-instagram text-xl"></i>
+            </div>
+            <span
+                class="absolute left-6 pl-8 pr-4 py-2 bg-white/90 backdrop-blur-md rounded-r-full text-[#E1306C] font-bold text-sm opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 shadow-md z-10 whitespace-nowrap">
+                Instagram
+            </span>
+        </a>
+
+        <!-- Social Item: LinkedIn -->
+        <a href="https://www.linkedin.com/company/cloudregex-infotech-pvt-ltd" class="group relative flex items-center"
+            target="_blank">
+            <div
+                class="w-12 h-12 rounded-full bg-white/90 backdrop-blur-md shadow-lg flex items-center justify-center text-slate-600 transition-all duration-300 group-hover:bg-[#0077B5] group-hover:text-white group-hover:scale-110 group-hover:shadow-[#0077B5]/30 relative z-20">
+                <i class="fab fa-linkedin-in text-xl"></i>
+            </div>
+            <span
+                class="absolute left-6 pl-8 pr-4 py-2 bg-white/90 backdrop-blur-md rounded-r-full text-[#0077B5] font-bold text-sm opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 shadow-md z-10 whitespace-nowrap">
+                LinkedIn
+            </span>
+        </a>
+
+        <!-- Social Item: YouTube -->
+        <!-- <a href="#" class="group relative flex items-center">
+            <div
+                class="w-12 h-12 rounded-full bg-white/90 backdrop-blur-md shadow-lg flex items-center justify-center text-slate-600 transition-all duration-300 group-hover:bg-[#FF0000] group-hover:text-white group-hover:scale-110 group-hover:shadow-[#FF0000]/30 relative z-20">
+                <i class="fab fa-youtube text-xl"></i>
+            </div>
+            <span
+                class="absolute left-6 pl-8 pr-4 py-2 bg-white/90 backdrop-blur-md rounded-r-full text-[#FF0000] font-bold text-sm opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 shadow-md z-10 whitespace-nowrap">
+                YouTube
+            </span>
+        </a> -->
+
+        <!-- Social Item: Twitter -->
+        <!-- <a href="#" class="group relative flex items-center">
+            <div
+                class="w-12 h-12 rounded-full bg-white/90 backdrop-blur-md shadow-lg flex items-center justify-center text-slate-600 transition-all duration-300 group-hover:bg-[#1DA1F2] group-hover:text-white group-hover:scale-110 group-hover:shadow-[#1DA1F2]/30 relative z-20">
+                <i class="fab fa-twitter text-xl"></i>
+            </div>
+            <span
+                class="absolute left-6 pl-8 pr-4 py-2 bg-white/90 backdrop-blur-md rounded-r-full text-[#1DA1F2] font-bold text-sm opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 shadow-md z-10 whitespace-nowrap">
+                Twitter
+            </span>
+        </a> -->
+
+        <!-- Social Item: Contact -->
+        <a href="mailto:info@cloudregex.com" class="group relative flex items-center" target="_blank">
+            <div
+                class="w-12 h-12 rounded-full bg-white/90 backdrop-blur-md shadow-lg flex items-center justify-center text-slate-600 transition-all duration-300 group-hover:bg-[#F59E0B] group-hover:text-white group-hover:scale-110 group-hover:shadow-[#F59E0B]/30 relative z-20">
+                <i class="fas fa-envelope text-xl"></i>
+            </div>
+            <span
+                class="absolute left-6 pl-8 pr-4 py-2 bg-white/90 backdrop-blur-md rounded-r-full text-[#F59E0B] font-bold text-sm opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 shadow-md z-10 whitespace-nowrap">
+                Email
+            </span>
+        </a>
+
+        <!-- Social Item: WhatsApp -->
+        <a href="https://wa.me/917507565067" target="_blank" rel="noopener" class="group relative flex items-center">
+
+            <div
+                class="w-12 h-12 rounded-full bg-white/90 backdrop-blur-md shadow-lg flex items-center justify-center text-slate-600 transition-all duration-300 group-hover:bg-[#25D366] group-hover:text-white group-hover:scale-110 group-hover:shadow-[#25D366]/30 relative z-20">
+                <i class="fab fa-whatsapp text-xl"></i>
+            </div>
+
+            <span
+                class="absolute left-6 pl-8 pr-4 py-2 bg-white/90 backdrop-blur-md rounded-r-full text-[#25D366] font-bold text-sm opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 shadow-md z-10 whitespace-nowrap">
+                WhatsApp
+            </span>
+
+        </a>
+
+    </div>
+
+    <!-- =====================================================
+         FLOATING QUICK INQUIRY CTA TAB
+    ====================================================== -->
+    <div class="float-cta hidden md:block">
+        <i class="fas fa-headset mr-2"></i> QUICK INQUIRY
+    </div>
+
+    <!-- =====================================================
+     FLOATING ACTION BUTTON STACK (RIGHT SIDE)
+====================================================== -->
+    <div class="floating-actions hidden md:flex">
+
+        <!-- WhatsApp -->
+        <a href="https://wa.me/917507565067" target="_blank" rel="noopener" class="floating-btn whatsapp">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+
+        <!-- Contact -->
+        <a href="tel:+919075448054" class="floating-btn contact">
+            <i class="fas fa-phone-alt"></i>
+        </a>
+
+
+        <!-- Back to Top -->
+        <button id="backToTop" class="floating-btn top">
+            <i class="fas fa-arrow-up"></i>
+        </button>
+
+    </div>
+
+
+    <!-- =====================================================
+         TOP INFO BAR
+    ====================================================== -->
+    <!-- <div class="top-info-bar">
+        <span>
+            <a href="mailto:info@cloudregex.com">📧 info@cloudregex.com</a>
+        </span>
+        <span class="info-time">⏰ Mon–Sat 10AM–7PM</span>
+        <span>
+            <a href="tel:+919075448054">📞 +91 90754 48054</a>
+        </span>
+        <span>
+            <a href="https://wa.me/917507565067">📞 +91 75075 65067</a>
+        </span>
+    </div> -->
+    <div class="top-info-bar">
+        <span>
+            <a href="mailto:info@cloudregex.com">
+                <i class="fas fa-envelope"></i> info@cloudregex.com
+            </a>
+        </span>
+
+        <span class="info-time">
+            <i class="fas fa-clock"></i> Mon–Sat 10AM–7PM
+        </span>
+
+        <span>
+            <a href="tel:+919075448054">
+                <i class="fas fa-phone-alt"></i> +91 90754 48054
+            </a>
+        </span>
+
+        <span>
+            <a href="https://wa.me/917507565067" target="_blank" rel="noopener">
+                <i class="fab fa-whatsapp"></i> +91 75075 65067
+            </a>
+        </span>
+    </div>
+
+
+    <!-- =====================================================
+         FIXED HEADER / NAVBAR
+    ====================================================== -->
+    <header id="main-header">
+        <nav class="max-w-full px-6 md:px-12 flex items-center justify-between">
+
+            <!-- Logo -->
+            <a href="#" class="flex items-center space-x-3 group">
+                <div
+                    class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center transform group-hover:rotate-12 transition-all shadow-lg">
+                    <i class="fas fa-microchip text-white text-xl"></i>
+                </div>
+                <span class="text-2xl font-extrabold tracking-tight text-slate-800">
+                    Cloud<span class="gradient-text">Regex</span>
+                </span>
+            </a>
+
+            <!-- Desktop Navigation -->
+            <div class="hidden lg:flex items-center space-x-8">
+                <a href="3.html" class="nav-link font-bold text-[13px] uppercase tracking-wider">Home</a>
+                <a href="3.html#about" class="nav-link font-bold text-[13px] uppercase tracking-wider">About us</a>
+                <a href="3.html#services" class="nav-link font-bold text-[13px] uppercase tracking-wider">Our
+                    services</a>
+                <a href="portfolio.html" class="nav-link font-bold text-[13px] uppercase tracking-wider">Portfolio</a>
+                <!-- <a href="#" class="nav-link font-bold text-[13px] uppercase tracking-wider">Our Products</a> -->
+                <!-- <a href="#" class="nav-link font-bold text-[13px] uppercase tracking-wider">Blogs</a> -->
+                <a href="3.html#contact-info" class="nav-link font-bold text-[13px] uppercase tracking-wider">Contact
+                    Us</a>
+            </div>
+
+            <!-- Desktop CTA -->
+            <div class="hidden lg:flex items-center space-x-6">
+                <a href="tel:+919075448054"
+                    class="gradient-btn px-8 py-3.5 rounded-2xl text-white font-bold text-sm tracking-wide">
+                    Inquire Now
+                </a>
+            </div>
+
+            <!-- Mobile Menu Toggle -->
+            <button id="menu-toggle"
+                class="lg:hidden w-10 h-10 flex flex-col items-center justify-center space-y-1.5 focus:outline-none">
+                <span class="w-6 h-0.5 bg-slate-800 transition-all rounded-full" id="l1"></span>
+                <span class="w-6 h-0.5 bg-slate-800 transition-all rounded-full" id="l2"></span>
+                <span class="w-4 h-0.5 bg-slate-800 transition-all self-end rounded-full" id="l3"></span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- =====================================================
+         HERO / MAIN SECTION
+    ====================================================== -->
+    <section id="portfolio" class="relative pt-52 pb-24 px-6 overflow-hidden">
+
+        <!-- Dot Background Canvas -->
+        <canvas id="dot-bg"></canvas>
+
+        <!-- Floating Orbs -->
+        <div class="floating-orb orb-1"></div>
+        <div class="floating-orb orb-2"></div>
+        <div class="floating-orb orb-3"></div>
+
+        <div class="max-w-[1400px] mx-auto relative z-10">
+
+            <!-- Section Header -->
+            <div class="text-center mb-16 relative z-10">
+                <div
+                    class="inline-flex items-center space-x-2 bg-indigo-50 px-5 py-2.5 rounded-full border border-indigo-100 mb-6">
+                    <span class="w-2 h-2 bg-indigo-500 rounded-full animate-pulse"></span>
+                    <span class="text-indigo-600 text-sm font-bold tracking-wide uppercase">Our Masterpieces</span>
+                </div>
+                <h2 class="text-4xl md:text-5xl font-black text-slate-900 mb-6">
+                    Featured <span class="gradient-text">Portfolio</span>
+                </h2>
+                <p class="text-lg text-slate-600 max-w-2xl mx-auto">
+                    Explore our diverse range of successful projects, crafted with precision and creativity.
+                </p>
+            </div>
+
+            <!-- Portfolio Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+                <!-- Project 1: SSDM Shikshan Sanstha -->
+                <div
+                    class="portfolio-card-premium group relative rounded-2xl overflow-hidden cursor-pointer aspect-[4/3] tilt-card">
+                    <img src="https://images.unsplash.com/photo-1562774053-701939374585?w=600&h=450&fit=crop"
+                        alt="SSDM Shikshan Sanstha"
+                        class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+                    <div
+                        class="absolute inset-0 glass-overlay opacity-100 transition-opacity duration-500 flex items-end">
+                        <div
+                            class="p-6 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                            <span
+                                class="text-indigo-400 text-xs font-bold uppercase tracking-wider mb-2 block">Education</span>
+                            <h3 class="text-lg font-bold text-white mb-2">SSDM Shikshan Sanstha</h3>
+                            <p class="text-slate-300 text-xs mb-4 line-clamp-2">Comprehensive educational management
+                                platform.</p>
+                            <a href="#"
+                                class="inline-flex items-center text-white text-sm font-semibold hover:text-indigo-400 transition-colors">
+                                View Project <i class="fas fa-arrow-right ml-2 text-xs"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2: PNP Infra Projects -->
+                <div
+                    class="portfolio-card-premium group relative rounded-2xl overflow-hidden cursor-pointer aspect-[4/3] tilt-card">
+                    <img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=600&h=450&fit=crop"
+                        alt="PNP Infra Projects"
+                        class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+                    <div
+                        class="absolute inset-0 glass-overlay opacity-100 transition-opacity duration-500 flex items-end">
+                        <div
+                            class="p-6 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                            <span
+                                class="text-orange-400 text-xs font-bold uppercase tracking-wider mb-2 block">Infrastructure</span>
+                            <h3 class="text-lg font-bold text-white mb-2">PNP Infra Projects</h3>
+                            <p class="text-slate-300 text-xs mb-4 line-clamp-2">Showcasing infrastructure excellence and
+                                civil projects.</p>
+                            <a href="#"
+                                class="inline-flex items-center text-white text-sm font-semibold hover:text-orange-400 transition-colors">
+                                View Project <i class="fas fa-arrow-right ml-2 text-xs"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3: Meatzo -->
+                <div
+                    class="portfolio-card-premium group relative rounded-2xl overflow-hidden cursor-pointer aspect-[4/3] tilt-card">
+                    <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=600&h=450&fit=crop"
+                        alt="Meatzo"
+                        class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+                    <div
+                        class="absolute inset-0 glass-overlay opacity-100 transition-opacity duration-500 flex items-end">
+                        <div
+                            class="p-6 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                            <span
+                                class="text-red-400 text-xs font-bold uppercase tracking-wider mb-2 block">E-commerce</span>
+                            <h3 class="text-lg font-bold text-white mb-2">Meatzo</h3>
+                            <p class="text-slate-300 text-xs mb-4 line-clamp-2">Online meat delivery and fresh food
+                                ordering platform.</p>
+                            <a href="#"
+                                class="inline-flex items-center text-white text-sm font-semibold hover:text-red-400 transition-colors">
+                                View Project <i class="fas fa-arrow-right ml-2 text-xs"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 4: BookLane App -->
+                <div
+                    class="portfolio-card-premium group relative rounded-2xl overflow-hidden cursor-pointer aspect-[4/3] tilt-card">
+                    <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&h=450&fit=crop"
+                        alt="BookLane App"
+                        class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+                    <div
+                        class="absolute inset-0 glass-overlay opacity-100 transition-opacity duration-500 flex items-end">
+                        <div
+                            class="p-6 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                            <span class="text-cyan-400 text-xs font-bold uppercase tracking-wider mb-2 block">Mobile
+                                App</span>
+                            <h3 class="text-lg font-bold text-white mb-2">BookLane App</h3>
+                            <p class="text-slate-300 text-xs mb-4 line-clamp-2">Buy and Sell Books! A marketplace for
+                                book lovers.</p>
+                            <a href="#"
+                                class="inline-flex items-center text-white text-sm font-semibold hover:text-cyan-400 transition-colors">
+                                View Project <i class="fas fa-arrow-right ml-2 text-xs"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 5: Unity Pathology Laboratory -->
+                <div
+                    class="portfolio-card-premium group relative rounded-2xl overflow-hidden cursor-pointer aspect-[4/3] tilt-card">
+                    <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=600&h=450&fit=crop"
+                        alt="Unity Pathology Laboratory"
+                        class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+                    <div
+                        class="absolute inset-0 glass-overlay opacity-100 transition-opacity duration-500 flex items-end">
+                        <div
+                            class="p-6 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                            <span
+                                class="text-teal-400 text-xs font-bold uppercase tracking-wider mb-2 block">Healthcare</span>
+                            <h3 class="text-lg font-bold text-white mb-2">Unity Pathology</h3>
+                            <p class="text-slate-300 text-xs mb-4 line-clamp-2">Advanced diagnostic and pathology
+                                services portal.</p>
+                            <a href="#"
+                                class="inline-flex items-center text-white text-sm font-semibold hover:text-teal-400 transition-colors">
+                                View Project <i class="fas fa-arrow-right ml-2 text-xs"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 6: Surya Vastu -->
+                <div
+                    class="portfolio-card-premium group relative rounded-2xl overflow-hidden cursor-pointer aspect-[4/3] tilt-card">
+                    <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&h=450&fit=crop"
+                        alt="Surya Vastu"
+                        class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+                    <div
+                        class="absolute inset-0 glass-overlay opacity-100 transition-opacity duration-500 flex items-end">
+                        <div
+                            class="p-6 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                            <span
+                                class="text-yellow-400 text-xs font-bold uppercase tracking-wider mb-2 block">Consultancy</span>
+                            <h3 class="text-lg font-bold text-white mb-2">Surya Vastu</h3>
+                            <p class="text-slate-300 text-xs mb-4 line-clamp-2">Expert Vastu consultancy services and
+                                resources.</p>
+                            <a href="#"
+                                class="inline-flex items-center text-white text-sm font-semibold hover:text-yellow-400 transition-colors">
+                                View Project <i class="fas fa-arrow-right ml-2 text-xs"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 7: Excellence Science Academy -->
+                <div
+                    class="portfolio-card-premium group relative rounded-2xl overflow-hidden cursor-pointer aspect-[4/3] tilt-card">
+                    <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=600&h=450&fit=crop"
+                        alt="Excellence Science Academy"
+                        class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+                    <div
+                        class="absolute inset-0 glass-overlay opacity-100 transition-opacity duration-500 flex items-end">
+                        <div
+                            class="p-6 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                            <span
+                                class="text-blue-400 text-xs font-bold uppercase tracking-wider mb-2 block">Education</span>
+                            <h3 class="text-lg font-bold text-white mb-2">Excellence Science Academy</h3>
+                            <p class="text-slate-300 text-xs mb-4 line-clamp-2">Top-tier science coaching and academic
+                                excellence.</p>
+                            <a href="#"
+                                class="inline-flex items-center text-white text-sm font-semibold hover:text-blue-400 transition-colors">
+                                View Project <i class="fas fa-arrow-right ml-2 text-xs"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 8: Save My CBSE -->
+                <div
+                    class="portfolio-card-premium group relative rounded-2xl overflow-hidden cursor-pointer aspect-[4/3] tilt-card">
+                    <img src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=600&h=450&fit=crop"
+                        alt="Save My CBSE"
+                        class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+                    <div
+                        class="absolute inset-0 glass-overlay opacity-100 transition-opacity duration-500 flex items-end">
+                        <div
+                            class="p-6 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                            <span
+                                class="text-green-400 text-xs font-bold uppercase tracking-wider mb-2 block">EdTech</span>
+                            <h3 class="text-lg font-bold text-white mb-2">Save My CBSE</h3>
+                            <p class="text-slate-300 text-xs mb-4 line-clamp-2">Study resources and guides for CBSE
+                                students.</p>
+                            <a href="#"
+                                class="inline-flex items-center text-white text-sm font-semibold hover:text-green-400 transition-colors">
+                                View Project <i class="fas fa-arrow-right ml-2 text-xs"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 9: BK Traders -->
+                <div
+                    class="portfolio-card-premium group relative rounded-2xl overflow-hidden cursor-pointer aspect-[4/3] tilt-card">
+                    <img src="https://images.unsplash.com/photo-1534452203293-494d7ddbf7e0?w=600&h=450&fit=crop"
+                        alt="BK Traders"
+                        class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+                    <div
+                        class="absolute inset-0 glass-overlay opacity-100 transition-opacity duration-500 flex items-end">
+                        <div
+                            class="p-6 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                            <span
+                                class="text-purple-400 text-xs font-bold uppercase tracking-wider mb-2 block">E-commerce</span>
+                            <h3 class="text-lg font-bold text-white mb-2">BK Traders</h3>
+                            <p class="text-slate-300 text-xs mb-4 line-clamp-2">Retail trading platform and product
+                                showcase.</p>
+                            <a href="#"
+                                class="inline-flex items-center text-white text-sm font-semibold hover:text-purple-400 transition-colors">
+                                View Project <i class="fas fa-arrow-right ml-2 text-xs"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 10: Theparam Edutech Pune -->
+                <div
+                    class="portfolio-card-premium group relative rounded-2xl overflow-hidden cursor-pointer aspect-[4/3] tilt-card">
+                    <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&h=450&fit=crop"
+                        alt="Theparam Edutech Pune"
+                        class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+                    <div
+                        class="absolute inset-0 glass-overlay opacity-100 transition-opacity duration-500 flex items-end">
+                        <div
+                            class="p-6 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                            <span
+                                class="text-sky-400 text-xs font-bold uppercase tracking-wider mb-2 block">Training</span>
+                            <h3 class="text-lg font-bold text-white mb-2">Theparam Edutech</h3>
+                            <p class="text-slate-300 text-xs mb-4 line-clamp-2">Professional software training and
+                                placement institute.</p>
+                            <a href="#"
+                                class="inline-flex items-center text-white text-sm font-semibold hover:text-sky-400 transition-colors">
+                                View Project <i class="fas fa-arrow-right ml-2 text-xs"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 11: The Cane Story -->
+                <div
+                    class="portfolio-card-premium group relative rounded-2xl overflow-hidden cursor-pointer aspect-[4/3] tilt-card">
+                    <img src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=600&h=450&fit=crop"
+                        alt="The Cane Story"
+                        class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+                    <div
+                        class="absolute inset-0 glass-overlay opacity-100 transition-opacity duration-500 flex items-end">
+                        <div
+                            class="p-6 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                            <span class="text-lime-400 text-xs font-bold uppercase tracking-wider mb-2 block">Food &
+                                Beverage</span>
+                            <h3 class="text-lg font-bold text-white mb-2">The Cane Story</h3>
+                            <p class="text-slate-300 text-xs mb-4 line-clamp-2">Authentic sugarcane juice brand and
+                                franchise.</p>
+                            <a href="#"
+                                class="inline-flex items-center text-white text-sm font-semibold hover:text-lime-400 transition-colors">
+                                View Project <i class="fas fa-arrow-right ml-2 text-xs"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 12: Hash Programming -->
+                <div
+                    class="portfolio-card-premium group relative rounded-2xl overflow-hidden cursor-pointer aspect-[4/3] tilt-card">
+                    <img src="https://images.unsplash.com/photo-1555099962-4199c345e5dd?w=600&h=450&fit=crop"
+                        alt="Hash Programming"
+                        class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+                    <div
+                        class="absolute inset-0 glass-overlay opacity-100 transition-opacity duration-500 flex items-end">
+                        <div
+                            class="p-6 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                            <span class="text-gray-400 text-xs font-bold uppercase tracking-wider mb-2 block">Tech
+                                Blog</span>
+                            <h3 class="text-lg font-bold text-white mb-2">Hash Programming</h3>
+                            <p class="text-slate-300 text-xs mb-4 line-clamp-2">Programming tutorials, code snippets,
+                                and tech resources.</p>
+                            <a href="#"
+                                class="inline-flex items-center text-white text-sm font-semibold hover:text-gray-400 transition-colors">
+                                View Project <i class="fas fa-arrow-right ml-2 text-xs"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 13: OPED Academy -->
+                <div
+                    class="portfolio-card-premium group relative rounded-2xl overflow-hidden cursor-pointer aspect-[4/3] tilt-card">
+                    <img src="https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=600&h=450&fit=crop"
+                        alt="OPED Academy"
+                        class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+                    <div
+                        class="absolute inset-0 glass-overlay opacity-100 transition-opacity duration-500 flex items-end">
+                        <div
+                            class="p-6 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                            <span
+                                class="text-rose-400 text-xs font-bold uppercase tracking-wider mb-2 block">Education</span>
+                            <h3 class="text-lg font-bold text-white mb-2">OPED Academy</h3>
+                            <p class="text-slate-300 text-xs mb-4 line-clamp-2">Online learning platform for
+                                professional development.</p>
+                            <a href="#"
+                                class="inline-flex items-center text-white text-sm font-semibold hover:text-rose-400 transition-colors">
+                                View Project <i class="fas fa-arrow-right ml-2 text-xs"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 14: Orange Makeover -->
+                <div
+                    class="portfolio-card-premium group relative rounded-2xl overflow-hidden cursor-pointer aspect-[4/3] tilt-card">
+                    <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?w=600&h=450&fit=crop"
+                        alt="Orange Makeover"
+                        class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+                    <div
+                        class="absolute inset-0 glass-overlay opacity-100 transition-opacity duration-500 flex items-end">
+                        <div
+                            class="p-6 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                            <span class="text-orange-300 text-xs font-bold uppercase tracking-wider mb-2 block">Beauty &
+                                Wellness</span>
+                            <h3 class="text-lg font-bold text-white mb-2">Orange Makeover</h3>
+                            <p class="text-slate-300 text-xs mb-4 line-clamp-2">Premier beauty salon and professional
+                                makeover studio.</p>
+                            <a href="#"
+                                class="inline-flex items-center text-white text-sm font-semibold hover:text-orange-300 transition-colors">
+                                View Project <i class="fas fa-arrow-right ml-2 text-xs"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- View All Button -->
+            <div class="text-center mt-12">
+                <a href="#"
+                    class="inline-flex items-center justify-center px-8 py-4 bg-white border-2 border-slate-100 rounded-full text-slate-700 font-bold hover:border-indigo-500 hover:text-indigo-600 transition-all duration-300 group shadow-sm hover:shadow-lg">
+                    View All Projects
+                    <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- =====================================================
+         FOOTER SECTION (ANIMATED PREMIUM FOOTER)
+    ====================================================== -->
+    <footer class="footer-zone bg-slate-900 pt-24 pb-12 relative overflow-hidden">
+
+        <!-- =====================================================
+             FOOTER BACKGROUND PARTICLE CANVAS
+        ====================================================== -->
+        <canvas id="footer-particles"></canvas>
+
+        <!-- =====================================================
+             FOOTER FLOATING ORBS (AMBIENT GLOW)
+        ====================================================== -->
+        <div class="footer-orb orb-a"></div>
+        <div class="footer-orb orb-b"></div>
+        <div class="footer-orb orb-c"></div>
+
+        <!-- =====================================================
+             FOOTER WAVE ANIMATIONS
+        ====================================================== -->
+        <div class="footer-wave"></div>
+        <div class="footer-wave wave-2"></div>
+
+        <!-- =====================================================
+             FOOTER TECH MOVING LINES
+        ====================================================== -->
+        <div class="tech-line line-1"></div>
+        <div class="tech-line line-2"></div>
+        <div class="tech-line line-3"></div>
+
+        <!-- =====================================================
+             FOOTER ABSTRACT BACKGROUND SHAPE
+        ====================================================== -->
+        <div class="absolute top-0 right-0 w-1/3 h-full bg-indigo-500/10 -skew-x-12 transform translate-x-1/2"></div>
+
+        <!-- =====================================================
+             FOOTER MAIN CONTENT CONTAINER
+        ====================================================== -->
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+
+            <!-- =====================================================
+                 FOOTER TOP GRID (4 COLUMNS)
+            ====================================================== -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-20">
+
+                <!-- =====================================================
+                     FOOTER BRAND / ABOUT COLUMN
+                ====================================================== -->
+                <div class="space-y-8">
+                    <a href="#" class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-indigo-500 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-microchip text-white text-xl"></i>
+                        </div>
+                        <span class="text-2xl font-bold text-white tracking-tight">CloudRegex</span>
+                    </a>
+
+                    <p class="text-slate-400 leading-relaxed text-lg">
+                        Cloud Regex Pvt Ltd is a pioneering software company dedicated to crafting innovative solutions.
+                    </p>
+
+                    <!-- Social Icons -->
+                    <div class="flex space-x-4">
+
+                        <!-- LinkedIn -->
+                        <a href="https://www.linkedin.com/company/cloudregex-infotech-pvt-ltd" target="_blank"
+                            rel="noopener"
+                            class="social-icon w-12 h-12 rounded-xl bg-slate-800 flex items-center justify-center text-slate-400">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+
+                        <!-- Instagram -->
+                        <a href="https://www.instagram.com/cloudregex_infotech_pvt_ltd/" target="_blank" rel="noopener"
+                            class="social-icon w-12 h-12 rounded-xl bg-slate-800 flex items-center justify-center text-slate-400">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+
+                        <!-- Email -->
+                        <a href="mailto:info@cloudregex.com" target="_blank" rel="noopener"
+                            class="social-icon w-12 h-12 rounded-xl bg-slate-800 flex items-center justify-center text-slate-400">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+
+                        <!-- WhatsApp -->
+                        <a href="https://wa.me/917507565067" target="_blank" rel="noopener"
+                            class="social-icon w-12 h-12 rounded-xl bg-slate-800 flex items-center justify-center text-slate-400">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+
+
+
+                        <!-- Facebook -->
+                        <!-- <a href="#" target="_blank" rel="noopener"
+                            class="social-icon w-12 h-12 rounded-xl bg-slate-800 flex items-center justify-center text-slate-400">
+                            <i class="fab fa-facebook-f"></i>
+                        </a> -->
+
+
+
+                        <!-- Contact / Call -->
+                        <a href="tel:+919075448054"
+                            class="social-icon w-12 h-12 rounded-xl bg-slate-800 flex items-center justify-center text-slate-400">
+                            <i class="fas fa-phone-alt"></i>
+                        </a>
+
+                    </div>
+
+                </div>
+
+                <!-- =====================================================
+                     FOOTER LINKS COLUMN – SERVICES
+                ====================================================== -->
+                <div>
+                    <h4 class="text-white font-bold text-lg mb-8 uppercase tracking-widest text-sm">
+                        Services
+                    </h4>
+                    <ul class="space-y-4">
+                        <li><a href="#" class="footer-link text-slate-400">Cloud Strategy</a></li>
+                        <li><a href="#" class="footer-link text-slate-400">Custom Software</a></li>
+                        <li><a href="#" class="footer-link text-slate-400">Data Analytics</a></li>
+                        <li><a href="#" class="footer-link text-slate-400">AI Integration</a></li>
+                        <li><a href="#" class="footer-link text-slate-400">Managed IT</a></li>
+                    </ul>
+                </div>
+
+                <!-- =====================================================
+                     FOOTER LINKS COLUMN – RESOURCES
+                ====================================================== -->
+                <div>
+                    <h4 class="text-white font-bold text-lg mb-8 uppercase tracking-widest text-sm">
+                        Resources
+                    </h4>
+                    <ul class="space-y-4">
+                        <li><a href="#" class="footer-link text-slate-400">Case Studies</a></li>
+                        <li><a href="#" class="footer-link text-slate-400">Technical Blog</a></li>
+                        <li><a href="#" class="footer-link text-slate-400">Open Source</a></li>
+                        <li><a href="#" class="footer-link text-slate-400">Documentation</a></li>
+                        <li><a href="#" class="footer-link text-slate-400">API Status</a></li>
+                    </ul>
+                </div>
+
+                <!-- =====================================================
+                     FOOTER NEWSLETTER / CONTACT COLUMN
+                ====================================================== -->
+                <div class="space-y-8">
+                    <h4 class="text-white font-bold text-lg mb-8 uppercase tracking-widest text-sm">
+                        Newsletter
+                    </h4>
+
+                    <div class="relative">
+                        <input type="text" placeholder="Your Email"
+                            class="w-full bg-slate-800 border-none rounded-2xl px-6 py-4 text-white placeholder-slate-500 focus:ring-2 focus:ring-indigo-500 transition-all">
+                        <button
+                            class="absolute right-2 top-2 w-12 h-12 bg-indigo-500 rounded-xl text-white hover:bg-indigo-400 transition-colors">
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+
+                    <div class="pt-4">
+                        <p class="text-slate-500 text-sm">Email us at:</p>
+                        <p class="text-white font-bold">info@cloudregex.com</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- =====================================================
+                 FOOTER BOTTOM BAR
+            ====================================================== -->
+            <div
+                class="pt-12 border-t border-slate-800 flex flex-col md:row-reverse md:flex-row justify-between items-center gap-6 text-white">
+
+                <!-- Footer Legal Links -->
+                <div class="flex space-x-8 text-sm">
+                    <a href="#" class="text-slate-500 hover:text-white transition-colors">Privacy</a>
+                    <a href="#" class="text-slate-500 hover:text-white transition-colors">Security</a>
+                    <a href="#" class="text-slate-500 hover:text-white transition-colors">Terms</a>
+                </div>
+
+                <!-- Copyright -->
+                &copy; 2024 CloudRegex Infotech Pvt Ltd. All rights reserved.
+                </p>
+            </div>
+
+        </div>
+    </footer>
+
+
+
+
+
+    <!-- =====================================================
+     MOBILE FULL-WIDTH SOCIAL BAR (ORIGINAL ICON COLORS)
+====================================================== -->
+    <div
+        class="fixed bottom-0 left-0 w-full z-50 md:hidden backdrop-blur-xl border-t border-slate-200 shadow-[0_-10px_30px_rgba(0,0,0,0.12)]">
+
+        <div class="flex justify-around items-center py-3">
+
+            <!-- Facebook -->
+            <a href="#"
+                class="w-12 h-12 flex items-center justify-center text-[#1877F2] transition-transform duration-300 hover:scale-110">
+                <i class="fab fa-facebook-f text-2xl"></i>
+            </a>
+
+            <!-- Instagram -->
+            <a href="https://www.instagram.com/cloudregex_infotech_pvt_ltd/" target="_blank"
+                class="w-12 h-12 flex items-center justify-center text-[#E1306C] transition-transform duration-300 hover:scale-110">
+                <i class="fab fa-instagram text-2xl"></i>
+            </a>
+
+            <!-- LinkedIn -->
+            <a href="https://www.linkedin.com/company/cloudregex-infotech-pvt-ltd" target="_blank"
+                class="w-12 h-12 flex items-center justify-center text-[#0077B5] transition-transform duration-300 hover:scale-110">
+                <i class="fab fa-linkedin-in text-2xl"></i>
+            </a>
+
+            <!-- Email -->
+            <a href="mailto:info@cloudregex.com" target="_blank"
+                class="w-12 h-12 flex items-center justify-center text-[#F59E0B] transition-transform duration-300 hover:scale-110">
+                <i class="fas fa-envelope text-2xl"></i>
+            </a>
+
+            <!-- WhatsApp -->
+            <a href="https://wa.me/917507565067" target="_blank" rel="noopener"
+                class="w-12 h-12 flex items-center justify-center text-[#25D366] transition-transform duration-300 hover:scale-110">
+                <i class="fab fa-whatsapp text-2xl"></i>
+            </a>
+
+        </div>
+    </div>
+
+
+
+    <!-- =====================================================
+         SCRIPT: MOBILE MENU TOGGLE & HEADER SCROLL EFFECT
+    ====================================================== -->
+    <script>
+        const menuToggle = document.getElementById('menu-toggle');
+        const closeMenu = document.getElementById('close-menu');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileOverlay = document.getElementById('mobile-overlay');
+        const l1 = document.getElementById('l1');
+        const l2 = document.getElementById('l2');
+        const l3 = document.getElementById('l3');
+
+        const mobileLinks = mobileMenu.querySelectorAll('a');
+
+        function toggleMenu() {
+            const active = mobileMenu.classList.toggle('active');
+            mobileOverlay.classList.toggle('active');
+
+            if (active) {
+                l1.style.transform = 'translateY(7px) rotate(45deg)';
+                l2.style.opacity = '0';
+                l3.style.width = '24px';
+                l3.style.transform = 'translateY(-7px) rotate(-45deg)';
+                document.body.style.overflow = 'hidden'; // Prevent scroll when menu open
+            } else {
+                l1.style.transform = 'none';
+                l2.style.opacity = '1';
+                l3.style.width = '16px';
+                l3.style.transform = 'none';
+                document.body.style.overflow = '';
+            }
+        }
+
+        menuToggle.addEventListener('click', toggleMenu);
+        closeMenu.addEventListener('click', toggleMenu);
+        mobileOverlay.addEventListener('click', toggleMenu);
+
+        // Auto-close menu when a link is clicked
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (mobileMenu.classList.contains('active')) {
+                    toggleMenu();
+                }
+            });
+        });
+
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('main-header');
+            const infoBar = document.querySelector('.top-info-bar');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+                infoBar.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+                infoBar.classList.remove('scrolled');
+            }
+        });
+    </script>
+
+    <!-- =====================================================
+         SCRIPT: DOT BACKGROUND CANVAS ANIMATION
+    ====================================================== -->
+    <script>
+        const canvas = document.getElementById("dot-bg");
+        const ctx = canvas.getContext("2d");
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resize();
+        window.addEventListener("resize", resize);
+
+        const dots = [];
+        for (let i = 0; i < 120; i++) {
+            dots.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                r: Math.random() * 1.6 + 0.4,
+                vx: (Math.random() - 0.5) * 0.2,
+                vy: (Math.random() - 0.5) * 0.2
+            });
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "rgba(79,70,229,0.35)";
+            dots.forEach(d => {
+                d.x += d.vx;
+                d.y += d.vy;
+                if (d.x < 0 || d.x > canvas.width) d.vx *= -1;
+                if (d.y < 0 || d.y > canvas.height) d.vy *= -1;
+                ctx.beginPath();
+                ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
+                ctx.fill();
+            });
+            requestAnimationFrame(draw);
+        }
+        draw();
+    </script>
+
+    <!-- =====================================================
+         SCRIPT: MOUSE MOVE PARALLAX FOR FLOATING ORBS
+    ====================================================== -->
+    <script>
+        document.addEventListener("mousemove", e => {
+            document.querySelectorAll(".floating-orb").forEach((orb, i) => {
+                const speed = (i + 1) * 8;
+                const x = (window.innerWidth / 2 - e.clientX) / speed;
+                const y = (window.innerHeight / 2 - e.clientY) / speed;
+                orb.style.transform = `translate(${x}px, ${y}px)`;
+            });
+        });
+    </script>
+
+
+    <!-- =====================================================
+     SCRIPT: TRUE CONTINUOUS INFINITE SLIDER (FIXED)
+====================================================== -->
+    <script>
+        const track = document.getElementById("slider-track");
+        const slides = track.children.length; // includes cloned slide
+        const sliderDots = document.querySelectorAll(".slider-dot");
+        const realSlides = slides - 1; // Number of real slides (excluding clone)
+        let index = 0;
+        let isAnimating = false;
+
+        // Update dot indicators
+        function updateDots() {
+            sliderDots.forEach((dot, i) => {
+                dot.classList.remove("active");
+                if (i === index % realSlides) {
+                    dot.classList.add("active");
+                }
+            });
+        }
+
+        function moveNext() {
+            if (isAnimating) return;
+            isAnimating = true;
+
+            index++;
+            track.style.transition = "transform 0.7s ease-in-out";
+            track.style.transform = `translateX(-${index * 100}%)`;
+            updateDots();
+
+            // When reaching cloned slide
+            if (index === slides - 1) {
+                setTimeout(() => {
+                    track.style.transition = "none";
+                    index = 0;
+                    track.style.transform = "translateX(0)";
+                    isAnimating = false;
+                    updateDots();
+                }, 700);
+            } else {
+                setTimeout(() => {
+                    isAnimating = false;
+                }, 700);
+            }
+        }
+
+        function goToSlide(slideIndex) {
+            if (isAnimating) return;
+            isAnimating = true;
+
+            index = slideIndex;
+            track.style.transition = "transform 0.7s ease-in-out";
+            track.style.transform = `translateX(-${index * 100}%)`;
+            updateDots();
+
+            setTimeout(() => {
+                isAnimating = false;
+            }, 700);
+        }
+
+        // Auto play
+        let autoSlide = setInterval(moveNext, 3500);
+
+        // NEXT arrow
+        document.getElementById("nextSlide").addEventListener("click", () => {
+            moveNext();
+            resetAuto();
+        });
+
+        // PREV arrow (smooth backward support)
+        document.getElementById("prevSlide").addEventListener("click", () => {
+            if (isAnimating) return;
+
+            if (index === 0) {
+                // Jump to last real slide instantly
+                track.style.transition = "none";
+                index = slides - 2;
+                track.style.transform = `translateX(-${index * 100}%)`;
+            }
+
+            setTimeout(() => {
+                track.style.transition = "transform 0.7s ease-in-out";
+                index--;
+                track.style.transform = `translateX(-${index * 100}%)`;
+                updateDots();
+            }, 20);
+
+            resetAuto();
+        });
+
+        // Dot click handlers
+        sliderDots.forEach((dot) => {
+            dot.addEventListener("click", () => {
+                const slideIndex = parseInt(dot.dataset.slide);
+                goToSlide(slideIndex);
+                resetAuto();
+            });
+        });
+
+        function resetAuto() {
+            clearInterval(autoSlide);
+            autoSlide = setInterval(moveNext, 3500);
+        }
+
+        // Initialize dots
+        updateDots();
+    </script>
+
+    <!-- =====================================================
+     SCRIPT: FLOATING ACTIONS – BACK TO TOP
+====================================================== -->
+    <script>
+        const backToTop = document.getElementById("backToTop");
+
+        backToTop.addEventListener("click", () => {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        });
+    </script>
+
+    <!-- =====================================================
+     SCRIPT: SCROLL PROGRESS TRACKER
+====================================================== -->
+    <script>
+        const progressBar = document.getElementById("scroll-progress-bar");
+
+        window.addEventListener("scroll", () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+
+            progressBar.style.width = scrollPercent + "%";
+        });
+    </script>
+
+    <!-- =====================================================
+     SCRIPT: VANILLA 3D TILT EFFECT
+    ====================================================== -->
+    <script>
+        document.addEventListener("change", function () {
+            // Re-run if content changes
+        });
+
+        // Simple Vanilla Tilt Implementation
+        const cards = document.querySelectorAll(".tilt-card");
+
+        cards.forEach(card => {
+            // ... (keep existing logic or ensure it works with new BG)
+
+            card.addEventListener("mousemove", (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+
+                const rotateX = ((y - centerY) / centerY) * -10; // Max 10deg rotation
+                const rotateY = ((x - centerX) / centerX) * 10;
+
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
+            });
+
+            card.addEventListener("mouseleave", () => {
+                card.style.transform = "perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)";
+            });
+        });
+    </script>
+</body>
+
+</html>
