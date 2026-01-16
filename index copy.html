@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CloudRegex | Infotech Pvt Ltd Software Company in Baramati.</title>
+    <title>CloudRegex | Infotech Pvt Ltd Software Company in Baramati</title>
 
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -51,6 +51,38 @@
             background-image:
                 radial-gradient(at 100% 100%, rgba(79, 70, 229, 0.1) 0, transparent 50%),
                 radial-gradient(at 0% 0%, rgba(6, 182, 212, 0.1) 0, transparent 50%);
+        }
+
+
+        /* Glassmorphism Card Styles */
+        .portfolio-card-premium {
+            position: relative;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.3);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        .portfolio-card-premium:hover {
+            box-shadow: 0 20px 40px -10px rgba(79, 70, 229, 0.4);
+            transform: translateY(-5px);
+        }
+
+        .portfolio-card-premium img {
+            transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .portfolio-card-premium:hover img {
+            transform: scale(1.15);
+        }
+
+        .glass-overlay {
+            background: linear-gradient(to top, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.6) 50%, rgba(15, 23, 42, 0) 100%);
+            backdrop-filter: blur(2px);
+            -webkit-backdrop-filter: blur(2px);
+            border-top: none;
         }
 
         /* Top Info Bar - matches footer bg-slate-900 */
@@ -968,7 +1000,7 @@
             <a href="#services"
                 class="text-lg font-bold text-slate-700 hover:text-indigo-600 border-b border-slate-50 pb-2">Our
                 services</a>
-            <a href="#portfolio"
+            <a href="portfolio.html"
                 class="text-lg font-bold text-slate-700 hover:text-indigo-600 border-b border-slate-50 pb-2">Portfolio</a>
             <!-- <a href="#" class="text-lg font-bold text-slate-700 hover:text-indigo-600 border-b border-slate-50 pb-2">Our
                 Products</a>
@@ -988,6 +1020,21 @@
          FLOATING SOCIAL MEDIA SIDEBAR (PREMIUM ANIMATED)
     ====================================================== -->
     <div class="fixed left-6 top-1/2 -translate-y-1/2 z-40 hidden md:flex flex-col gap-4">
+
+        <!-- Social Item: WhatsApp -->
+        <a href="https://wa.me/917507565067" target="_blank" rel="noopener" class="group relative flex items-center">
+
+            <div
+                class="w-12 h-12 rounded-full bg-white/90 backdrop-blur-md shadow-lg flex items-center justify-center text-slate-600 transition-all duration-300 group-hover:bg-[#25D366] group-hover:text-white group-hover:scale-110 group-hover:shadow-[#25D366]/30 relative z-20">
+                <i class="fab fa-whatsapp text-xl"></i>
+            </div>
+
+            <span
+                class="absolute left-6 pl-8 pr-4 py-2 bg-white/90 backdrop-blur-md rounded-r-full text-[#25D366] font-bold text-sm opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 shadow-md z-10 whitespace-nowrap">
+                WhatsApp
+            </span>
+
+        </a>
 
         <!-- Social Item: Facebook -->
         <a href="#" class="group relative flex items-center">
@@ -1063,20 +1110,19 @@
             </span>
         </a>
 
-        <!-- Social Item: WhatsApp -->
-        <a href="https://wa.me/917507565067" target="_blank" rel="noopener" class="group relative flex items-center">
 
+        <!-- Social Item: Contact -->
+        <a href="tel:+919075448054" class="group relative flex items-center" target="_blank">
             <div
-                class="w-12 h-12 rounded-full bg-white/90 backdrop-blur-md shadow-lg flex items-center justify-center text-slate-600 transition-all duration-300 group-hover:bg-[#25D366] group-hover:text-white group-hover:scale-110 group-hover:shadow-[#25D366]/30 relative z-20">
-                <i class="fab fa-whatsapp text-xl"></i>
+                class="w-12 h-12 rounded-full bg-white/90 backdrop-blur-md shadow-lg flex items-center justify-center text-slate-600 transition-all duration-300 group-hover:bg-[#4f46e5] group-hover:text-white group-hover:scale-110 group-hover:shadow-[#4f46e5]/30 relative z-20">
+                <i class="fas fa-phone-alt text-xl"></i>
             </div>
-
             <span
-                class="absolute left-6 pl-8 pr-4 py-2 bg-white/90 backdrop-blur-md rounded-r-full text-[#25D366] font-bold text-sm opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 shadow-md z-10 whitespace-nowrap">
-                WhatsApp
+                class="absolute left-6 pl-8 pr-4 py-2 bg-white/90 backdrop-blur-md rounded-r-full text-[#4f46e5] font-bold text-sm opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 shadow-md z-10 whitespace-nowrap">
+                Contact
             </span>
-
         </a>
+
 
     </div>
 
@@ -1126,6 +1172,9 @@
             <a href="https://wa.me/917507565067">📞 +91 75075 65067</a>
         </span>
     </div> -->
+
+
+
     <div class="top-info-bar">
         <span>
             <a href="mailto:info@cloudregex.com">
@@ -1159,10 +1208,8 @@
 
             <!-- Logo -->
             <a href="#" class="flex items-center space-x-3 group">
-                <div
-                    class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center transform group-hover:rotate-12 transition-all shadow-lg">
-                    <i class="fas fa-microchip text-white text-xl"></i>
-                </div>
+                <img src="logo.png" alt="CloudRegex Logo"
+                    class="h-10 w-auto transform group-hover:scale-110 transition-all">
                 <span class="text-2xl font-extrabold tracking-tight text-slate-800">
                     Cloud<span class="gradient-text">Regex</span>
                 </span>
@@ -1173,7 +1220,7 @@
                 <a href="#home" class="nav-link font-bold text-[13px] uppercase tracking-wider">Home</a>
                 <a href="#about" class="nav-link font-bold text-[13px] uppercase tracking-wider">About us</a>
                 <a href="#services" class="nav-link font-bold text-[13px] uppercase tracking-wider">Our services</a>
-                <a href="#portfolio" class="nav-link font-bold text-[13px] uppercase tracking-wider">Portfolio</a>
+                <a href="portfolio.html" class="nav-link font-bold text-[13px] uppercase tracking-wider">Portfolio</a>
                 <!-- <a href="#" class="nav-link font-bold text-[13px] uppercase tracking-wider">Our Products</a> -->
                 <!-- <a href="#" class="nav-link font-bold text-[13px] uppercase tracking-wider">Blogs</a> -->
                 <a href="#contact-info" class="nav-link font-bold text-[13px] uppercase tracking-wider">Contact Us</a>
@@ -1200,7 +1247,7 @@
     <!-- =====================================================
          HERO / MAIN SECTION
     ====================================================== -->
-    <main class="relative pt-52 pb-32 px-6">
+    <main id="home" class="relative pt-52 pb-32 px-6">
 
         <!-- Floating Orbs -->
         <div class="floating-orb orb-1"></div>
@@ -1219,9 +1266,14 @@
                     </span>
                 </div>
 
-                <h1 class="text-5xl md:text-6xl lg:text-8xl font-black text-slate-900 leading-[1.1]">
+                <!-- <h1 class="text-5xl md:text-6xl lg:text-8xl font-black text-slate-900 leading-[1.1]">
+                    Empowering with Excellence: <br><span class="gradient-text">Unleashing Digital Solutions</span>
+                </h1> -->
+
+                <h1 class="text-5xl md:text-6xl lg:text-7xl font-black text-slate-900 leading-[1.1]">
                     Empowering with Excellence: <br><span class="gradient-text">Unleashing Digital Solutions</span>
                 </h1>
+
 
                 <p class="text-xl text-slate-600 leading-relaxed max-w-xl">
                     Welcome to Cloud Regex. We're your partners in innovation, specializing in crafting exceptional
@@ -2406,9 +2458,10 @@
                     class="choose-card group relative p-8 bg-slate-800/50 backdrop-blur-md rounded-3xl border border-slate-700/50 hover:border-indigo-500/50 transition-all duration-500 overflow-hidden">
                     <!-- Large Number Watermark -->
                     <div
-                        class="absolute -right-4 -top-4 text-9xl font-black text-slate-700/10 group-hover:text-indigo-500/10 transition-colors duration-500 select-none">
+                        class="absolute right-0 top-0 text-9xl font-black text-slate-700/10 group-hover:text-indigo-500/10 transition-colors duration-500 select-none">
                         01
                     </div>
+
 
                     <!-- Content -->
                     <div class="relative z-10">
@@ -2433,7 +2486,7 @@
                 <div
                     class="choose-card group relative p-8 bg-slate-800/50 backdrop-blur-md rounded-3xl border border-slate-700/50 hover:border-purple-500/50 transition-all duration-500 overflow-hidden">
                     <div
-                        class="absolute -right-4 -top-4 text-9xl font-black text-slate-700/10 group-hover:text-purple-500/10 transition-colors duration-500 select-none">
+                        class="absolute right-0 top-0 text-9xl font-black text-slate-700/10 group-hover:text-purple-500/10 transition-colors duration-500 select-none">
                         02
                     </div>
 
@@ -2458,7 +2511,7 @@
                 <div
                     class="choose-card group relative p-8 bg-slate-800/50 backdrop-blur-md rounded-3xl border border-slate-700/50 hover:border-cyan-500/50 transition-all duration-500 overflow-hidden">
                     <div
-                        class="absolute -right-4 -top-4 text-9xl font-black text-slate-700/10 group-hover:text-cyan-500/10 transition-colors duration-500 select-none">
+                        class="absolute right-0 top-0 text-9xl font-black text-slate-700/10 group-hover:text-cyan-500/10 transition-colors duration-500 select-none">
                         03
                     </div>
 
@@ -2483,7 +2536,7 @@
                 <div
                     class="choose-card group relative p-8 bg-slate-800/50 backdrop-blur-md rounded-3xl border border-slate-700/50 hover:border-emerald-500/50 transition-all duration-500 overflow-hidden">
                     <div
-                        class="absolute -right-4 -top-4 text-9xl font-black text-slate-700/10 group-hover:text-emerald-500/10 transition-colors duration-500 select-none">
+                        class="absolute right-0 top-0 text-9xl font-black text-slate-700/10 group-hover:text-emerald-500/10 transition-colors duration-500 select-none">
                         04
                     </div>
 
@@ -3463,11 +3516,17 @@
                     <!-- Map Container -->
                     <div
                         class="rounded-[32px] overflow-hidden shadow-2xl border-4 border-white h-[400px] relative group">
-                        <iframe
+                        <!-- <iframe
                             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3430.3496286164454!2d74.61106337464446!3d18.179582179502315!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc39f83ed359763%3A0x8706fc4cde9ac462!2sCloudRegex%20Infotech%20Pvt%20Ltd!5e1!3m2!1sen!2sin!4v1767155398407!5m2!1sen!2sin"
                             width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
                             referrerpolicy="no-referrer-when-downgrade"
                             class="grayscale hover:grayscale-0 transition-all duration-700">
+                        </iframe> -->
+
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3430.3496286164454!2d74.61106337464446!3d18.179582179502315!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc39f83ed359763%3A0x8706fc4cde9ac462!2sCloudRegex%20Infotech%20Pvt%20Ltd!5e1!3m2!1sen!2sin!4v1767155398407!5m2!1sen!2sin"
+                            width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade">
                         </iframe>
 
                         <!-- Map Overlay Button -->
@@ -3487,29 +3546,31 @@
     <!-- =====================================================
          PORTFOLIO SECTION
     ====================================================== -->
-    <section id="portfolio" class="relative py-24 px-6 overflow-hidden bg-white">
 
-        <!-- Background Decorations -->
-        <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent">
-        </div>
-        <div
-            class="absolute right-0 top-1/4 w-[400px] h-[400px] bg-indigo-50 rounded-full filter blur-[100px] opacity-50">
-        </div>
+    <section id="portfolio" class="relative pt-50 pb-24 px-6 overflow-hidden">
+
+        <!-- Dot Background Canvas -->
+        <canvas id="dot-bg"></canvas>
+
+        <!-- Floating Orbs -->
+        <div class="floating-orb orb-1"></div>
+        <div class="floating-orb orb-2"></div>
+        <div class="floating-orb orb-3"></div>
 
         <div class="max-w-[1400px] mx-auto relative z-10">
 
             <!-- Section Header -->
-            <div class="text-center mb-16">
+            <div class="text-center mb-16 relative z-10">
                 <div
                     class="inline-flex items-center space-x-2 bg-indigo-50 px-5 py-2.5 rounded-full border border-indigo-100 mb-6">
                     <span class="w-2 h-2 bg-indigo-500 rounded-full animate-pulse"></span>
-                    <span class="text-indigo-600 text-sm font-bold tracking-wide uppercase">Our Work</span>
+                    <span class="text-indigo-600 text-sm font-bold tracking-wide uppercase">Our Masterpieces</span>
                 </div>
                 <h2 class="text-4xl md:text-5xl font-black text-slate-900 mb-6">
-                    Awesome <span class="gradient-text">Portfolio</span>
+                    Featured <span class="gradient-text">Portfolio</span>
                 </h2>
                 <p class="text-lg text-slate-600 max-w-2xl mx-auto">
-                    Explore our diverse range of successful projects across various industries.
+                    Explore our diverse range of successful projects, crafted with precision and creativity.
                 </p>
             </div>
 
@@ -3518,12 +3579,12 @@
 
                 <!-- Project 1: SSDM Shikshan Sanstha -->
                 <div
-                    class="portfolio-card group relative rounded-2xl overflow-hidden cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-500 aspect-[4/3]">
-                    <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=600&h=450&fit=crop"
+                    class="portfolio-card-premium group relative rounded-2xl overflow-hidden cursor-pointer aspect-[4/3] tilt-card">
+                    <img src="https://images.unsplash.com/photo-1562774053-701939374585?w=600&h=450&fit=crop"
                         alt="SSDM Shikshan Sanstha"
                         class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
                     <div
-                        class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                        class="absolute inset-0 glass-overlay opacity-100 transition-opacity duration-500 flex items-end">
                         <div
                             class="p-6 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
                             <span
@@ -3541,12 +3602,12 @@
 
                 <!-- Project 2: PNP Infra Projects -->
                 <div
-                    class="portfolio-card group relative rounded-2xl overflow-hidden cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-500 aspect-[4/3]">
+                    class="portfolio-card-premium group relative rounded-2xl overflow-hidden cursor-pointer aspect-[4/3] tilt-card">
                     <img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=600&h=450&fit=crop"
                         alt="PNP Infra Projects"
                         class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
                     <div
-                        class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                        class="absolute inset-0 glass-overlay opacity-100 transition-opacity duration-500 flex items-end">
                         <div
                             class="p-6 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
                             <span
@@ -3564,12 +3625,12 @@
 
                 <!-- Project 3: Meatzo -->
                 <div
-                    class="portfolio-card group relative rounded-2xl overflow-hidden cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-500 aspect-[4/3]">
+                    class="portfolio-card-premium group relative rounded-2xl overflow-hidden cursor-pointer aspect-[4/3] tilt-card">
                     <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=600&h=450&fit=crop"
                         alt="Meatzo"
                         class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
                     <div
-                        class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                        class="absolute inset-0 glass-overlay opacity-100 transition-opacity duration-500 flex items-end">
                         <div
                             class="p-6 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
                             <span
@@ -3587,12 +3648,12 @@
 
                 <!-- Project 4: BookLane App -->
                 <div
-                    class="portfolio-card group relative rounded-2xl overflow-hidden cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-500 aspect-[4/3]">
+                    class="portfolio-card-premium group relative rounded-2xl overflow-hidden cursor-pointer aspect-[4/3] tilt-card">
                     <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&h=450&fit=crop"
                         alt="BookLane App"
                         class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
                     <div
-                        class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                        class="absolute inset-0 glass-overlay opacity-100 transition-opacity duration-500 flex items-end">
                         <div
                             class="p-6 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
                             <span class="text-cyan-400 text-xs font-bold uppercase tracking-wider mb-2 block">Mobile
@@ -3610,12 +3671,12 @@
 
                 <!-- Project 5: Unity Pathology Laboratory -->
                 <div
-                    class="portfolio-card group relative rounded-2xl overflow-hidden cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-500 aspect-[4/3]">
+                    class="portfolio-card-premium group relative rounded-2xl overflow-hidden cursor-pointer aspect-[4/3] tilt-card">
                     <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=600&h=450&fit=crop"
                         alt="Unity Pathology Laboratory"
                         class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
                     <div
-                        class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                        class="absolute inset-0 glass-overlay opacity-100 transition-opacity duration-500 flex items-end">
                         <div
                             class="p-6 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
                             <span
@@ -3633,12 +3694,12 @@
 
                 <!-- Project 6: Surya Vastu -->
                 <div
-                    class="portfolio-card group relative rounded-2xl overflow-hidden cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-500 aspect-[4/3]">
-                    <img src="https://images.unsplash.com/photo-1545665277-593749958b2e?w=600&h=450&fit=crop"
+                    class="portfolio-card-premium group relative rounded-2xl overflow-hidden cursor-pointer aspect-[4/3] tilt-card">
+                    <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&h=450&fit=crop"
                         alt="Surya Vastu"
                         class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
                     <div
-                        class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                        class="absolute inset-0 glass-overlay opacity-100 transition-opacity duration-500 flex items-end">
                         <div
                             class="p-6 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
                             <span
@@ -3656,12 +3717,12 @@
 
                 <!-- Project 7: Excellence Science Academy -->
                 <div
-                    class="portfolio-card group relative rounded-2xl overflow-hidden cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-500 aspect-[4/3]">
+                    class="portfolio-card-premium group relative rounded-2xl overflow-hidden cursor-pointer aspect-[4/3] tilt-card">
                     <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=600&h=450&fit=crop"
                         alt="Excellence Science Academy"
                         class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
                     <div
-                        class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                        class="absolute inset-0 glass-overlay opacity-100 transition-opacity duration-500 flex items-end">
                         <div
                             class="p-6 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
                             <span
@@ -3679,12 +3740,12 @@
 
                 <!-- Project 8: Save My CBSE -->
                 <div
-                    class="portfolio-card group relative rounded-2xl overflow-hidden cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-500 aspect-[4/3]">
-                    <img src="https://images.unsplash.com/photo-1544717305-2782549b5136?w=600&h=450&fit=crop"
+                    class="portfolio-card-premium group relative rounded-2xl overflow-hidden cursor-pointer aspect-[4/3] tilt-card">
+                    <img src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=600&h=450&fit=crop"
                         alt="Save My CBSE"
                         class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
                     <div
-                        class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                        class="absolute inset-0 glass-overlay opacity-100 transition-opacity duration-500 flex items-end">
                         <div
                             class="p-6 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
                             <span
@@ -3702,12 +3763,12 @@
 
                 <!-- Project 9: BK Traders -->
                 <div
-                    class="portfolio-card group relative rounded-2xl overflow-hidden cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-500 aspect-[4/3]">
+                    class="portfolio-card-premium group relative rounded-2xl overflow-hidden cursor-pointer aspect-[4/3] tilt-card">
                     <img src="https://images.unsplash.com/photo-1534452203293-494d7ddbf7e0?w=600&h=450&fit=crop"
                         alt="BK Traders"
                         class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
                     <div
-                        class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                        class="absolute inset-0 glass-overlay opacity-100 transition-opacity duration-500 flex items-end">
                         <div
                             class="p-6 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
                             <span
@@ -3725,12 +3786,12 @@
 
                 <!-- Project 10: Theparam Edutech Pune -->
                 <div
-                    class="portfolio-card group relative rounded-2xl overflow-hidden cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-500 aspect-[4/3]">
-                    <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=600&h=450&fit=crop"
+                    class="portfolio-card-premium group relative rounded-2xl overflow-hidden cursor-pointer aspect-[4/3] tilt-card">
+                    <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&h=450&fit=crop"
                         alt="Theparam Edutech Pune"
                         class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
                     <div
-                        class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                        class="absolute inset-0 glass-overlay opacity-100 transition-opacity duration-500 flex items-end">
                         <div
                             class="p-6 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
                             <span
@@ -3748,12 +3809,12 @@
 
                 <!-- Project 11: The Cane Story -->
                 <div
-                    class="portfolio-card group relative rounded-2xl overflow-hidden cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-500 aspect-[4/3]">
+                    class="portfolio-card-premium group relative rounded-2xl overflow-hidden cursor-pointer aspect-[4/3] tilt-card">
                     <img src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=600&h=450&fit=crop"
                         alt="The Cane Story"
                         class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
                     <div
-                        class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                        class="absolute inset-0 glass-overlay opacity-100 transition-opacity duration-500 flex items-end">
                         <div
                             class="p-6 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
                             <span class="text-lime-400 text-xs font-bold uppercase tracking-wider mb-2 block">Food &
@@ -3771,12 +3832,12 @@
 
                 <!-- Project 12: Hash Programming -->
                 <div
-                    class="portfolio-card group relative rounded-2xl overflow-hidden cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-500 aspect-[4/3]">
+                    class="portfolio-card-premium group relative rounded-2xl overflow-hidden cursor-pointer aspect-[4/3] tilt-card">
                     <img src="https://images.unsplash.com/photo-1555099962-4199c345e5dd?w=600&h=450&fit=crop"
                         alt="Hash Programming"
                         class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
                     <div
-                        class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                        class="absolute inset-0 glass-overlay opacity-100 transition-opacity duration-500 flex items-end">
                         <div
                             class="p-6 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
                             <span class="text-gray-400 text-xs font-bold uppercase tracking-wider mb-2 block">Tech
@@ -3794,12 +3855,12 @@
 
                 <!-- Project 13: OPED Academy -->
                 <div
-                    class="portfolio-card group relative rounded-2xl overflow-hidden cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-500 aspect-[4/3]">
+                    class="portfolio-card-premium group relative rounded-2xl overflow-hidden cursor-pointer aspect-[4/3] tilt-card">
                     <img src="https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=600&h=450&fit=crop"
                         alt="OPED Academy"
                         class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
                     <div
-                        class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                        class="absolute inset-0 glass-overlay opacity-100 transition-opacity duration-500 flex items-end">
                         <div
                             class="p-6 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
                             <span
@@ -3817,12 +3878,12 @@
 
                 <!-- Project 14: Orange Makeover -->
                 <div
-                    class="portfolio-card group relative rounded-2xl overflow-hidden cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-500 aspect-[4/3]">
-                    <img src="https://images.unsplash.com/photo-1487412947132-2329845674c6?w=600&h=450&fit=crop"
+                    class="portfolio-card-premium group relative rounded-2xl overflow-hidden cursor-pointer aspect-[4/3] tilt-card">
+                    <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?w=600&h=450&fit=crop"
                         alt="Orange Makeover"
                         class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
                     <div
-                        class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                        class="absolute inset-0 glass-overlay opacity-100 transition-opacity duration-500 flex items-end">
                         <div
                             class="p-6 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
                             <span class="text-orange-300 text-xs font-bold uppercase tracking-wider mb-2 block">Beauty &
@@ -3842,7 +3903,7 @@
 
             <!-- View All Button -->
             <div class="text-center mt-12">
-                <a href="#"
+                <a href="/portfolio.html"
                     class="inline-flex items-center justify-center px-8 py-4 bg-white border-2 border-slate-100 rounded-full text-slate-700 font-bold hover:border-indigo-500 hover:text-indigo-600 transition-all duration-300 group shadow-sm hover:shadow-lg">
                     View All Projects
                     <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
@@ -3902,9 +3963,7 @@
                 ====================================================== -->
                 <div class="space-y-8">
                     <a href="#" class="flex items-center space-x-3">
-                        <div class="w-10 h-10 bg-indigo-500 rounded-xl flex items-center justify-center">
-                            <i class="fas fa-microchip text-white text-xl"></i>
-                        </div>
+                        <img src="logo.png" alt="CloudRegex Logo" class="h-10 w-auto">
                         <span class="text-2xl font-bold text-white tracking-tight">CloudRegex</span>
                     </a>
 
@@ -3915,11 +3974,12 @@
                     <!-- Social Icons -->
                     <div class="flex space-x-4">
 
-                        <!-- LinkedIn -->
-                        <a href="https://www.linkedin.com/company/cloudregex-infotech-pvt-ltd" target="_blank"
-                            rel="noopener"
+
+
+                        <!-- WhatsApp -->
+                        <a href="https://wa.me/917507565067" target="_blank" rel="noopener"
                             class="social-icon w-12 h-12 rounded-xl bg-slate-800 flex items-center justify-center text-slate-400">
-                            <i class="fab fa-linkedin-in"></i>
+                            <i class="fab fa-whatsapp"></i>
                         </a>
 
                         <!-- Instagram -->
@@ -3928,18 +3988,20 @@
                             <i class="fab fa-instagram"></i>
                         </a>
 
+                        <!-- LinkedIn -->
+                        <a href="https://www.linkedin.com/company/cloudregex-infotech-pvt-ltd" target="_blank"
+                            rel="noopener"
+                            class="social-icon w-12 h-12 rounded-xl bg-slate-800 flex items-center justify-center text-slate-400">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+
+
+
                         <!-- Email -->
                         <a href="mailto:info@cloudregex.com" target="_blank" rel="noopener"
                             class="social-icon w-12 h-12 rounded-xl bg-slate-800 flex items-center justify-center text-slate-400">
                             <i class="fas fa-envelope"></i>
                         </a>
-
-                        <!-- WhatsApp -->
-                        <a href="https://wa.me/917507565067" target="_blank" rel="noopener"
-                            class="social-icon w-12 h-12 rounded-xl bg-slate-800 flex items-center justify-center text-slate-400">
-                            <i class="fab fa-whatsapp"></i>
-                        </a>
-
 
 
                         <!-- Facebook -->
@@ -4050,6 +4112,8 @@
 
         <div class="flex justify-around items-center py-3">
 
+
+
             <!-- Facebook -->
             <a href="#"
                 class="w-12 h-12 flex items-center justify-center text-[#1877F2] transition-transform duration-300 hover:scale-110">
@@ -4063,10 +4127,10 @@
             </a>
 
             <!-- LinkedIn -->
-            <a href="https://www.linkedin.com/company/cloudregex-infotech-pvt-ltd" target="_blank"
+            <!-- <a href="https://www.linkedin.com/company/cloudregex-infotech-pvt-ltd" target="_blank"
                 class="w-12 h-12 flex items-center justify-center text-[#0077B5] transition-transform duration-300 hover:scale-110">
                 <i class="fab fa-linkedin-in text-2xl"></i>
-            </a>
+            </a> -->
 
             <!-- Email -->
             <a href="mailto:info@cloudregex.com" target="_blank"
@@ -4078,6 +4142,12 @@
             <a href="https://wa.me/917507565067" target="_blank" rel="noopener"
                 class="w-12 h-12 flex items-center justify-center text-[#25D366] transition-transform duration-300 hover:scale-110">
                 <i class="fab fa-whatsapp text-2xl"></i>
+            </a>
+
+            <!-- Contact / Call -->
+            <a href="tel:+919075448054"
+                class="w-12 h-12 flex items-center justify-center text-[#4f46e5] transition-transform duration-300 hover:scale-110">
+                <i class="fas fa-phone-alt text-2xl"></i>
             </a>
 
         </div>
